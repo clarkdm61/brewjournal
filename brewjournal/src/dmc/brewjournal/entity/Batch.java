@@ -43,7 +43,6 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	private static final long serialVersionUID = 1L;
 
 	public Batch() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -8,6 +8,11 @@ import com.vaadin.ui.Window;
 
 public class AppMain extends Application implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 418883975687018098L;
+
 	@Override
 	public void init() {
 		Window mainWindow = new Window("Brew Journal");
@@ -21,8 +26,9 @@ public class AppMain extends Application implements Serializable {
 
         
 		Label test = new Label("This will be ui for the Brew Journal!");
+		BatchListView listView = new BatchListView();
 		
-		mainWindow.addComponent(test);
+		mainWindow.addComponent(listView);
 		setMainWindow(mainWindow);
 		
 		//setTheme("brewjournal");   

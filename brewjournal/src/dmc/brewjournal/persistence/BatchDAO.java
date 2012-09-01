@@ -13,7 +13,6 @@ public class BatchDAO extends BaseDAO {
 
 	public BatchDAO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Query getBatchByUserIdQuery() {
@@ -42,6 +41,7 @@ public class BatchDAO extends BaseDAO {
 	}
 	
 	public List<Batch> findAll(String userId) {
+		@SuppressWarnings("unchecked")
 		List<Batch> extent = (List<Batch>) getBatchByUserIdQuery().execute(userId);
 		
 		// why? just do it.
