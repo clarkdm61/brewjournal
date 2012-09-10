@@ -8,10 +8,9 @@ import com.vaadin.ui.Window;
 
 public class AppMain extends Application implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 418883975687018098L;
+	private BatchDetailView batchDetailView = new BatchDetailView();
+	private BatchListView batchListView = new BatchListView();
 
 	@Override
 	public void init() {
@@ -19,20 +18,28 @@ public class AppMain extends Application implements Serializable {
 		mainWindow.setSizeFull();
 
 		 // Create the application data instance
-        //AppData sessionData = new AppData(this);
+        AppData sessionData = new AppData(this);
         
         // Register it as a listener in the application context
-        //getContext().addTransactionListener(sessionData);
+        getContext().addTransactionListener(sessionData);
 
         
-		Label test = new Label("This will be ui for the Brew Journal!");
-		BatchListView listView = new BatchListView();
+		//Label test = new Label("This will be ui for the Brew Journal!");
 		
-		mainWindow.addComponent(listView);
+		mainWindow.addComponent(batchListView);
 		setMainWindow(mainWindow);
 		
 		//setTheme("brewjournal");   
 
 	}
-
+	
+	public void showDetailView() {
+		getMainWindow().removeComponent(batchListView);
+		getMainWindow().addComponent(batchDetailView);
+	}
+	
+	public void showListView() {
+		getMainWindow().removeComponent(batchDetailView);
+		getMainWindow().addComponent(batchListView);
+	}
 }
