@@ -28,6 +28,9 @@ public class AppData implements TransactionListener, Serializable {
 	// "session" data
 	private BrewJournalService brewJournalService = null;
 	private List<Batch> batchList = null;
+//	private BatchDetailView batchDetailView = null;
+//	private BatchListView batchListView = null;
+
 	
 	/**
 	 * Wrap Vaadin Application, and bind this instance to the ThreadLocal "instance"
@@ -54,14 +57,29 @@ public class AppData implements TransactionListener, Serializable {
 			instance.set(null);
 	}
 	
-	public BrewJournalService getBrewJournalService() {
+	public static BrewJournalService getBrewJournalService() {
 		if (instance.get().brewJournalService == null) {
 			instance.get().brewJournalService = new BrewJournalServiceImpl();
 		}
 		return instance.get().brewJournalService;
 	}
 	
-	public List<Batch> getBatchList() {
+	public static List<Batch> getBatchList() {
 		return instance.get().batchList;
 	}
+	
+//	public static BatchDetailView getBatchDetailView() {
+//		if (instance.get().batchDetailView == null) {
+//			instance.get().batchDetailView = new BatchDetailView();
+//		}
+//		return instance.get().batchDetailView;
+//	}
+//	
+//	public static BatchListView getBatchListView() {
+//		if (instance.get().batchListView == null) {
+//			instance.get().batchListView = new BatchListView();
+//		}
+//		return instance.get().batchListView;
+//	}
+	
 }
