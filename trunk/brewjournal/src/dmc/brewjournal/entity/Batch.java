@@ -1,5 +1,8 @@
 package dmc.brewjournal.entity;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -17,6 +20,14 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	private Integer batchNumber;
 	@Persistent
 	private String batchName;
+	
+	@Persistent
+	private Date brewDate;
+	@Persistent
+	private Date rackingDate;
+	@Persistent
+	private Date finalDate;
+	
 	@Persistent
 	private String description;
 	@Persistent
@@ -36,6 +47,8 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	// yeast type
 	// yield - probably used the bottle calc to determine ounces
 	// collection of notes
+	@Persistent
+	private ArrayList<Note> notes = new ArrayList<Note>();
 	
 	/**
 	 * 
@@ -120,6 +133,45 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	@Override
+	public String toString() {
+		return "Batch [id=" + id + ", batchNumber=" + batchNumber
+				+ ", batchName=" + batchName + ", description=" + description
+				+ "]";
+	}
+
+	public Date getBrewDate() {
+		return brewDate;
+	}
+
+	public void setBrewDate(Date brewDate) {
+		this.brewDate = brewDate;
+	}
+
+	public Date getRackingDate() {
+		return rackingDate;
+	}
+
+	public void setRackingDate(Date rackingDate) {
+		this.rackingDate = rackingDate;
+	}
+
+	public Date getFinalDate() {
+		return finalDate;
+	}
+
+	public void setFinalDate(Date bottleDate) {
+		this.finalDate = bottleDate;
+	}
+
+	public ArrayList<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(ArrayList<Note> notes) {
+		this.notes = notes;
 	}
 	
 }

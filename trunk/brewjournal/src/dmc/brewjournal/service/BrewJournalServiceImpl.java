@@ -1,5 +1,6 @@
 package dmc.brewjournal.service;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -9,8 +10,12 @@ import com.google.appengine.api.users.UserServiceFactory;
 import dmc.brewjournal.entity.Batch;
 import dmc.brewjournal.persistence.BatchDAO;
 
-public class BrewJournalServiceImpl implements BrewJournalService {
+public class BrewJournalServiceImpl implements BrewJournalService, Serializable {
 
+	/**
+	 * TODO: Vaadin want's everything serializabe - does it make sense for services?
+	 */
+	private static final long serialVersionUID = -3680125108130758731L;
 	private transient BatchDAO batchDAO = null;
 	
 	public BrewJournalServiceImpl() {
