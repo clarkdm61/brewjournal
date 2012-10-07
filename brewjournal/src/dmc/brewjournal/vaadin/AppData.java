@@ -68,6 +68,10 @@ public class AppData implements TransactionListener, Serializable {
 		return instance.get().batchList;
 	}
 	
+	public static AppMain getApplication() {
+		return (AppMain)instance.get().app;
+	}
+	
 //	public static BatchDetailView getBatchDetailView() {
 //		if (instance.get().batchDetailView == null) {
 //			instance.get().batchDetailView = new BatchDetailView();
