@@ -12,6 +12,7 @@ import javax.jdo.annotations.PrimaryKey;
 @PersistenceCapable(detachable="true")
 public class Batch implements java.io.Serializable, Comparable<Batch> {
 
+	private static final long serialVersionUID = -3802556750841815571L;
 	// Fields
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -49,11 +50,6 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	// collection of notes
 	@Persistent
 	private ArrayList<Note> notes = new ArrayList<Note>();
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
 	public Batch() {
 	}
