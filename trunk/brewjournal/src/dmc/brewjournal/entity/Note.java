@@ -16,6 +16,8 @@ public class Note implements java.io.Serializable {
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Long id;
 	@Persistent
+    private Long batchId;
+	@Persistent
 	private Date date;
 	@Persistent
 	private String text;
@@ -45,6 +47,14 @@ public class Note implements java.io.Serializable {
 
 	public void setText(String text) {
 		this.text = text;
+	}
+
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
 	}
 
 }

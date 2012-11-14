@@ -48,7 +48,7 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	// yeast type
 	// yield - probably used the bottle calc to determine ounces
 	// collection of notes
-	@Persistent
+	//@Persistent
 	private ArrayList<Note> notes = new ArrayList<Note>();
 
 	public Batch() {

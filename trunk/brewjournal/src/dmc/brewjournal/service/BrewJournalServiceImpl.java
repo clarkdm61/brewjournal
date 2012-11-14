@@ -8,7 +8,9 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import dmc.brewjournal.entity.Batch;
+import dmc.brewjournal.entity.Note;
 import dmc.brewjournal.persistence.BatchDAO;
+import dmc.brewjournal.persistence.NotesDAO;
 
 public class BrewJournalServiceImpl implements BrewJournalService, Serializable {
 
@@ -17,6 +19,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	 */
 	private static final long serialVersionUID = -3680125108130758731L;
 	private transient BatchDAO batchDAO = null;
+	private transient NotesDAO notesDAO = null;
 	
 	public BrewJournalServiceImpl() {
 		super();
@@ -30,6 +33,13 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 			batchDAO = new BatchDAO();
 		}
 		return batchDAO;
+	}
+	
+	protected NotesDAO getNotesDAO() {
+		if (notesDAO == null) {
+			notesDAO = new NotesDAO();
+		}
+		return notesDAO;
 	}
 	
 	/* (non-Javadoc)
@@ -57,6 +67,26 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	@Override
 	public void delete(Long id) {
 		getBatchDAO().delete(id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see dmc.brewjournal.service.BrewJournalService#findNotesForBatch(java.lang.Long)
+	 */
+	@Override
+	public List<Note> findNotesForBatch(Long batchId) {
+		return getNotesDAO().findAllForBatch(batchId);
+	}
+	
+	/* (non-Javadoc)
+	 * @see dmc.brewjournal.service.BrewJournalService#createUpdateNotes(java.util.List)
+	 */
+	@Override
+	public void createUpdateNotes(List<Note> notes) {
+		
+		for (Note newInstance : notes) {
+			getNotesDAO().createUpdate(newInstance);
+		}
+		
 	}
 
 }
