@@ -3,6 +3,7 @@ package dmc.brewjournal.service;
 import java.util.List;
 
 import dmc.brewjournal.entity.Batch;
+import dmc.brewjournal.entity.Note;
 
 public interface BrewJournalService {
 
@@ -23,5 +24,17 @@ public interface BrewJournalService {
 	 * @param id
 	 */
 	public abstract void delete(Long id);
+	
+	/**
+	 * Returns all notes for specified batch
+	 * @param id
+	 */
+	public abstract List<Note> findNotesForBatch(Long batchId);
+	
+	/**
+	 * Create/update the list of notes
+	 * @param notes
+	 */
+	public abstract void createUpdateNotes(List<Note> notes);
 
 }
