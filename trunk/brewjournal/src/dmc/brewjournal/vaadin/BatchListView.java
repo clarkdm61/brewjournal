@@ -112,7 +112,6 @@ public class BatchListView extends CustomComponent {
 		btnEdit.addListener(new Button.ClickListener() {		
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// TODO: Load then edit
 				if (getSelectedBatch() != null) {
 					AppMain app = AppData.getApplication();
 					app.getBatchDetailView().setBatchModel(getSelectedBatch());
@@ -159,7 +158,6 @@ public class BatchListView extends CustomComponent {
 		
 		Collections.sort(batchList);
 		
-		// TODO: update table
 		BatchListContainer container = new BatchListContainer(Batch.class, batchList);
 		tblBatchList.setContainerDataSource(container);
 		tblBatchList.setVisibleColumns(BatchListContainer.NATURAL_COL_ORDER);
