@@ -2,11 +2,13 @@ package dmc.brewjournal.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.persistence.Transient;
 
 
 @PersistenceCapable(detachable="true")
@@ -49,7 +51,8 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	// yield - probably used the bottle calc to determine ounces
 	// collection of notes
 	//@Persistent
-	private ArrayList<Note> notes = new ArrayList<Note>();
+	@Transient
+	private List<Note> notes = new ArrayList<Note>();
 
 	public Batch() {
 	}
@@ -162,11 +165,11 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 		this.finalDate = bottleDate;
 	}
 
-	public ArrayList<Note> getNotes() {
+	public List<Note> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(ArrayList<Note> notes) {
+	public void setNotes(List<Note> notes) {
 		this.notes = notes;
 	}
 	
