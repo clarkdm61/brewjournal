@@ -28,8 +28,6 @@ public class AppData implements TransactionListener, Serializable {
 	// "session" data
 	private BrewJournalService brewJournalService = null;
 	private List<Batch> batchList = null;
-//	private BatchDetailView batchDetailView = null;
-//	private BatchListView batchListView = null;
 
 	
 	/**
@@ -72,18 +70,5 @@ public class AppData implements TransactionListener, Serializable {
 		return (AppMain)instance.get().app;
 	}
 	
-//	public static BatchDetailView getBatchDetailView() {
-//		if (instance.get().batchDetailView == null) {
-//			instance.get().batchDetailView = new BatchDetailView();
-//		}
-//		return instance.get().batchDetailView;
-//	}
-//	
-//	public static BatchListView getBatchListView() {
-//		if (instance.get().batchListView == null) {
-//			instance.get().batchListView = new BatchListView();
-//		}
-//		return instance.get().batchListView;
-//	}
-	
+
 }
