@@ -10,8 +10,11 @@ import com.vaadin.ui.Window;
 public class AppMain extends Application implements Serializable {
 
 	private static final long serialVersionUID = 418883975687018098L;
+	
+	// all of the views for this application:
 	private BatchDetailView batchDetailView = null;
 	private BatchListView batchListView = null;
+	private YeastView yeastView = null;
 
 	@Override
 	public void init() {
@@ -29,6 +32,7 @@ public class AppMain extends Application implements Serializable {
 				
 		batchDetailView = new BatchDetailView();
 		batchListView = new BatchListView();
+		yeastView = new YeastView();
 
 		mainWindow.addComponent(batchListView);
 		setMainWindow(mainWindow);
@@ -47,12 +51,20 @@ public class AppMain extends Application implements Serializable {
 	}
 	
 	/**
-	 * Replace MainWindow's compnent with the batch list view
+	 * Replace MainWindow's component with the batch list view
 	 */
 	public void showListView() {
 		removeCurrentComponent();
 		getBatchListView().refreshBatchListTable();
 		getMainWindow().addComponent(batchListView);
+	}
+	
+	/**
+	 * Replace MainWindow's component with the yeast view
+	 */
+	public void showYeastView() {
+		removeCurrentComponent();
+		getMainWindow().addComponent(yeastView);
 	}
 	
 	private void removeCurrentComponent() {

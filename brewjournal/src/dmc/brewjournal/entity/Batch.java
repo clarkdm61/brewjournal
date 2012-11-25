@@ -1,14 +1,11 @@
 package dmc.brewjournal.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import javax.persistence.Transient;
 
 
 @PersistenceCapable(detachable="true")
@@ -20,9 +17,9 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Long id;
 	@Persistent
-	private Integer batchNumber;
+	private Integer batchNumber = 0;
 	@Persistent
-	private String batchName;
+	private String batchName = "";
 	
 	@Persistent
 	private Date brewDate;
@@ -32,27 +29,28 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	private Date finalDate;
 	
 	@Persistent
-	private String description;
+	private String description = "";
 	@Persistent
-	private String ingredients;
+	private String ingredients = "";
 	@Persistent
-	private Integer targetOG;
+	private Integer targetOG = 0;
 	@Persistent
-	private Integer actualOG;
+	private Integer actualOG = 0;
 	@Persistent
-	private Integer actualFG;
+	private Integer actualFG = 0;
 	// userId is never used by the client
 	@Persistent
 	private String userId;
+	@Persistent
+	private Integer yeastId = 0;
 	
 	// todo
 	// itemized collection of materials
 	// yeast type
 	// yield - probably used the bottle calc to determine ounces
 	// collection of notes
-	//@Persistent
-	@Transient
-	private List<Note> notes = new ArrayList<Note>();
+//	@Transient try TODO: @NotPersistent
+//	private List<Note> notes = new ArrayList<Note>();
 
 	public Batch() {
 	}
@@ -134,12 +132,6 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 		this.userId = userId;
 	}
 
-	@Override
-	public String toString() {
-		return "Batch [id=" + id + ", batchNumber=" + batchNumber
-				+ ", batchName=" + batchName + ", description=" + description
-				+ "]";
-	}
 
 	public Date getBrewDate() {
 		return brewDate;
@@ -165,12 +157,31 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 		this.finalDate = bottleDate;
 	}
 
-	public List<Note> getNotes() {
-		return notes;
+	@Override
+	public String toString() {
+		return "Batch [id=" + id + ", batchNumber=" + batchNumber
+				+ ", batchName=" + batchName + ", brewDate=" + brewDate
+				+ ", rackingDate=" + rackingDate + ", finalDate=" + finalDate
+				+ ", description=" + description + ", ingredients="
+				+ ingredients + ", targetOG=" + targetOG + ", actualOG="
+				+ actualOG + ", actualFG=" + actualFG + ", userId=" + userId
+				+ "]";
 	}
 
-	public void setNotes(List<Note> notes) {
-		this.notes = notes;
+	public Integer getYeastId() {
+		return yeastId;
 	}
+
+	public void setYeastId(Integer yeastId) {
+		this.yeastId = yeastId;
+	}
+
+//	public List<Note> getNotes() {
+//		return notes;
+//	}
+//
+//	public void setNotes(List<Note> notes) {
+//		this.notes = notes;
+//	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import dmc.brewjournal.entity.Batch;
 import dmc.brewjournal.entity.Note;
+import dmc.brewjournal.entity.Yeast;
 
 public interface BrewJournalService {
 
@@ -17,13 +18,13 @@ public interface BrewJournalService {
 	 * Returns all Batches for the current user
 	 * @return
 	 */
-	public abstract List<Batch> findAll();
+	public abstract List<Batch> findAllBatches();
 
 	/**
 	 * Deletes the specified batch by ID
 	 * @param id
 	 */
-	public abstract void delete(Long id);
+	public abstract void deleteBatch(Long id);
 	
 	/**
 	 * Returns all notes for specified batch
@@ -36,5 +37,17 @@ public interface BrewJournalService {
 	 * @param notes
 	 */
 	public abstract void createUpdateNotes(List<Note> notes);
+	
+	/**
+	 * Returns all Yeast in system
+	 * @return
+	 */
+	public abstract List<Yeast> findAllYeast();
+	
+	/**
+	 * Create/update yeast data
+	 * @param instance
+	 */
+	public abstract void createUpdate(Yeast instance);
 
 }
