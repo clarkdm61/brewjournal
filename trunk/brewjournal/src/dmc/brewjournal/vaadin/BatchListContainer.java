@@ -8,6 +8,8 @@ import dmc.brewjournal.entity.Batch;
 
 public class BatchListContainer extends BeanItemContainer<Batch> {
 	
+	private static final long serialVersionUID = 1612979952425087113L;
+
 	/**
 	 * Natural property order for Batch bean. Used in tables and forms.
 	 */

@@ -1,56 +1,48 @@
 package dmc.brewjournal.persistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import dmc.brewjournal.entity.Note;
 
 public class NotesDAO extends BaseDAO {
-
-	private static Query NotesByBatchIdQuery = null;
 	
 	public NotesDAO() {
 	}
 
-	public Query getNotesByBatchIdQuery() {
-		if (NotesByBatchIdQuery == null) {
-			NotesByBatchIdQuery =  getPersistenceManager().newQuery(Note.class);
-			NotesByBatchIdQuery.setFilter("batchId==batchIdParam");
-			NotesByBatchIdQuery.declareParameters("String batchIdParam");
-		}
-		return NotesByBatchIdQuery;
-	}
 	
 	public void createUpdate(Note newInstance) {
-		getLogger().fine("createUpdate newInstance");
-		getPersistenceManager().makePersistent(newInstance);
+		getLogger().fine("createUpdate: " + newInstance);
+		_makePersistent(newInstance);
 	}
 	
 	public void delete(Long noteId) {
-		getLogger().fine("delete:" + noteId);
-		Note note = findById(noteId);
-		getPersistenceManager().deletePersistent(note);
-	}
-	
-	public Note findById(Long id) {
-		Note note = getPersistenceManager().getObjectById(Note.class, id);
-		return note;
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			Note note = getPersistenceManager().getObjectById(Note.class, noteId);
+			pm.deletePersistent(note);
+		} finally {
+			pm.close();
+		}
 	}
 	
 	public List<Note> findAllForBatch(Long batchId) {
-		@SuppressWarnings("unchecked")
-		List<Note> extent = (List<Note>) getNotesByBatchIdQuery().execute(batchId);
-		
-		// why? just do it.
-		// TODO: really figure out why - probably a proxy class thing
-		ArrayList<Note> result = new ArrayList<Note>();
-		for (Note item : extent) {
-			result.add(item);
+		PersistenceManager pm = getPersistenceManager();
+		try {
+			Query notesByBatchIdQuery = pm.newQuery(Note.class);
+			notesByBatchIdQuery.setFilter("batchId==batchIdParam");
+			notesByBatchIdQuery.declareParameters("String batchIdParam");
+
+			@SuppressWarnings("unchecked")
+			List<Note> result = (List<Note>) notesByBatchIdQuery
+					.execute(batchId);
+
+			return result;
+		} finally {
+			pm.close();
 		}
-		
-		return result;
 	}
 	
 }

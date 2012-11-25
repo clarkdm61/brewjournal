@@ -9,9 +9,17 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 import dmc.brewjournal.entity.Batch;
 import dmc.brewjournal.entity.Note;
+import dmc.brewjournal.entity.Yeast;
 import dmc.brewjournal.persistence.BatchDAO;
 import dmc.brewjournal.persistence.NotesDAO;
+import dmc.brewjournal.persistence.YeastDAO;
 
+/**
+ * This is a Stateful service class. So consider the consequences.
+ * 
+ * @author David
+ *
+ */
 public class BrewJournalServiceImpl implements BrewJournalService, Serializable {
 
 	/**
@@ -20,6 +28,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	private static final long serialVersionUID = -3680125108130758731L;
 	private transient BatchDAO batchDAO = null;
 	private transient NotesDAO notesDAO = null;
+	private transient YeastDAO yeastDAO = null;
 	
 	public BrewJournalServiceImpl() {
 		super();
@@ -42,6 +51,13 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 		return notesDAO;
 	}
 	
+	protected YeastDAO getYeastDAO() {
+		if (yeastDAO == null) {
+			yeastDAO = new YeastDAO();
+		}
+		return yeastDAO;
+	}
+	
 	/* (non-Javadoc)
 	 * @see dmc.brewjournal.service.BrewJournalService#createUpdate(dmc.brewjournal.entity.Batch)
 	 */
@@ -56,7 +72,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	 * @see dmc.brewjournal.service.BrewJournalService#findAll()
 	 */
 	@Override
-	public List<Batch> findAll() {
+	public List<Batch> findAllBatches() {
 		UserService userService = UserServiceFactory.getUserService();
 		return getBatchDAO().findAll(userService.getCurrentUser().getUserId());
 	}
@@ -65,7 +81,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	 * @see dmc.brewjournal.service.BrewJournalService#delete(java.lang.Long)
 	 */
 	@Override
-	public void delete(Long id) {
+	public void deleteBatch(Long id) {
 		getBatchDAO().delete(id);
 	}
 	
@@ -86,7 +102,21 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 		for (Note newInstance : notes) {
 			getNotesDAO().createUpdate(newInstance);
 		}
-		
+	}
+	/* (non-Javadoc)
+	 * @see dmc.brewjournal.service.BrewJournalService#findAllYeast()
+	 */
+	@Override
+	public List<Yeast> findAllYeast() {
+		UserService userService = UserServiceFactory.getUserService();
+		return getYeastDAO().findAll(userService.getCurrentUser().getUserId());
+	}
+	/* (non-Javadoc)
+	 * @see dmc.brewjournal.service.BrewJournalService#createUpdate(dmc.brewjournal.entity.Yeast)
+	 */
+	@Override
+	public void createUpdate(Yeast instance) {
+		getYeastDAO().createUpdate(instance);
 	}
 
 }
