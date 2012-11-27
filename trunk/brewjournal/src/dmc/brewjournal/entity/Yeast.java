@@ -1,14 +1,13 @@
 package dmc.brewjournal.entity;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+@PersistenceCapable(detachable="true")
 public class Yeast implements java.io.Serializable, Comparable<Yeast> {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1854447130471913003L;
 	// Fields
 	@PrimaryKey
