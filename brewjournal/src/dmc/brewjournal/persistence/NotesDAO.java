@@ -1,5 +1,6 @@
 package dmc.brewjournal.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
@@ -36,9 +37,14 @@ public class NotesDAO extends BaseDAO {
 			notesByBatchIdQuery.declareParameters("String batchIdParam");
 
 			@SuppressWarnings("unchecked")
-			List<Note> result = (List<Note>) notesByBatchIdQuery
+			List<Note> extent = (List<Note>) notesByBatchIdQuery
 					.execute(batchId);
-
+			
+			List<Note> result = new ArrayList<Note>();
+			for (Note note : extent) {
+				result.add(note);
+			}
+			
 			return result;
 		} finally {
 			pm.close();
