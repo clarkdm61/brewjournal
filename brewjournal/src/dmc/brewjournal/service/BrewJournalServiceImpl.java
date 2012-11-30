@@ -116,6 +116,8 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	 */
 	@Override
 	public void createUpdate(Yeast instance) {
+		UserService userService = UserServiceFactory.getUserService();
+		instance.setUserId(userService.getCurrentUser().getUserId());
 		getYeastDAO().createUpdate(instance);
 	}
 
