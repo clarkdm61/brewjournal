@@ -120,5 +120,17 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 		instance.setUserId(userService.getCurrentUser().getUserId());
 		getYeastDAO().createUpdate(instance);
 	}
+	
+	/* (non-Javadoc)
+	 * @see dmc.brewjournal.service.BrewJournalService#calculateABV(java.lang.Integer, java.lang.Integer)
+	 */
+	@Override
+	public Double calculateABV(Integer og, Integer fg) {
+		Double dog = new Double(og);
+		Double dfg = new Double(fg);
+		Double result = (dog-dfg) * .13125;
+		
+		return result;
+	}
 
 }
