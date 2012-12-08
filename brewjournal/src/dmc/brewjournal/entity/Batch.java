@@ -42,7 +42,7 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	@Persistent
 	private String userId;
 	@Persistent
-	private Integer yeastId = 0;
+	private Long yeastId = 0L;
 	
 	// todo
 	// itemized collection of materials
@@ -168,11 +168,11 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 				+ "]";
 	}
 
-	public Integer getYeastId() {
+	public Long getYeastId() {
 		return yeastId;
 	}
 
-	public void setYeastId(Integer yeastId) {
+	public void setYeastId(Long yeastId) {
 		this.yeastId = yeastId;
 	}
 
