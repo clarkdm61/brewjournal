@@ -49,5 +49,13 @@ public interface BrewJournalService {
 	 * @param instance
 	 */
 	public abstract void createUpdate(Yeast instance);
+	
+	/**
+	 * Calculate / estimate ABV
+	 * @param og
+	 * @param fg
+	 * @return
+	 */
+	public abstract Double calculateABV(Integer og, Integer fg);
 
 }
