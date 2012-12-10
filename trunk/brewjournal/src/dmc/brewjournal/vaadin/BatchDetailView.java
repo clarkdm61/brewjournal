@@ -278,20 +278,20 @@ public class BatchDetailView extends CustomComponent {
 	 * Try to update whenever OG and Yeast get updated
 	 */
 	private void updateTheoreticalValues() {
-		Integer og = toIntegerSafe(txtActualOG.getValue());
+		Integer og = toIntegerSafe(txtActualOG.getValue()); //  might need Double
 		
 		Double abv = 0d;
 		if (og > 0 && getSelectedYeast() != null) {
-			Integer lowFG = og * (getSelectedYeast().getMinAttenuation()/100);
-			Integer highFG = og * (getSelectedYeast().getMaxAttenuation()/100);
+			Integer lowFG = og - og * (getSelectedYeast().getMinAttenuation()/100);
+			Integer highFG = og - og * (getSelectedYeast().getMaxAttenuation()/100);
 			
 			abv = AppData.getBrewJournalService().calculateABV(og, lowFG);
 			
-			String displayABV = abv.toString();
+			String displayABV = String.format("%.2d", abv);
 			
 			abv = AppData.getBrewJournalService().calculateABV(og, highFG);
 			
-			displayABV += " to " + abv;
+			displayABV += " to " + String.format("%.2d", abv);
 			
 			txtTargetABV.setReadOnly(false);
 			txtTargetABV.setValue(displayABV);
