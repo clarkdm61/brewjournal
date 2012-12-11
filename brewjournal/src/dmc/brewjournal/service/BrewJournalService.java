@@ -56,6 +56,6 @@ public interface BrewJournalService {
 	 * @param fg
 	 * @return
 	 */
-	public abstract Double calculateABV(Integer og, Integer fg);
+	public abstract Double calculateABV(Double og, Double fg);
 
 }

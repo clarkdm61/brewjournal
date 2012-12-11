@@ -11,8 +11,8 @@ public class BrewJournalServiceTest {
 		
 		BrewJournalService service = new BrewJournalServiceImpl(); 
 		
-		int og = 54;
-		int fg = 12;
+		double og = 54;
+		double fg = 12;
 		
 		double result = service.calculateABV(og, fg);
 		System.out.println(result);
