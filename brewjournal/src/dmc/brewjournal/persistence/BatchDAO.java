@@ -22,7 +22,7 @@ public class BatchDAO extends BaseDAO {
 	public void delete(Long id) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
-			Batch batch = getPersistenceManager().getObjectById(Batch.class, id);
+			Batch batch = pm.getObjectById(Batch.class, id);
 			pm.deletePersistent(batch);
 		} finally {
 			pm.close();
