@@ -7,6 +7,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Text;
+
 
 @PersistenceCapable(detachable="true")
 public class Batch implements java.io.Serializable, Comparable<Batch> {
@@ -29,7 +31,7 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	private Date finalDate;
 	
 	@Persistent
-	private String description = "";
+	private Text description = new Text("");
 	@Persistent
 	private String ingredients = "";
 	@Persistent
@@ -85,11 +87,11 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	}
 
 	public String getDescription() {
-		return description;
+		return description.getValue();
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = new Text(description);
 	}
 
 	public String getIngredients() {

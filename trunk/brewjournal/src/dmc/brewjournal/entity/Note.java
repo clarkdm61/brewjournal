@@ -6,6 +6,7 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import com.google.appengine.api.datastore.Text;
 
 @PersistenceCapable(detachable="true")
 public class Note implements java.io.Serializable {
@@ -15,12 +16,12 @@ public class Note implements java.io.Serializable {
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Long id;
-	@Persistent
+	@Persistent 
     private Long batchId;
 	@Persistent
 	private Date date;
-	@Persistent
-	private String text;
+	@Persistent 
+	private Text text;
 	
 	public Note() {
 	}
@@ -42,11 +43,11 @@ public class Note implements java.io.Serializable {
 	}
 
 	public String getText() {
-		return text;
+		return text.getValue();
 	}
 
 	public void setText(String text) {
-		this.text = text;
+		this.text = new Text(text);
 	}
 
 	public Long getBatchId() {
