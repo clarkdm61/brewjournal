@@ -16,7 +16,7 @@ public class YeastDAO extends BaseDAO {
 	public void delete(Long id) {
 		PersistenceManager pm = getPersistenceManager();
 		try {
-			Yeast o = getPersistenceManager().getObjectById(Yeast.class, id);
+			Yeast o = pm.getObjectById(Yeast.class, id);
 			pm.deletePersistent(o);
 		} finally {
 			pm.close();
