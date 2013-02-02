@@ -85,7 +85,6 @@ public class BatchDetailView extends CustomComponent {
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 
-	
 	/**
 	 * 
 	 */
@@ -95,6 +94,7 @@ public class BatchDetailView extends CustomComponent {
 	private List<Note> notesModel = new ArrayList<Note>(); // the text model
 	private Yeast selectedYeast = null;
 	private boolean initializing = false;
+	private static final DecimalFormat df = new DecimalFormat("#.##");
 
 	
 	/**
@@ -116,8 +116,6 @@ public class BatchDetailView extends CustomComponent {
 		cboYeast.setNewItemsAllowed(false);
 		cboYeast.setScrollToSelectedItem(true);
 		cboYeast.setItemCaptionPropertyId("name");
-		
-		txtActualOG.setImmediate(true);
 
 	}
 
@@ -141,7 +139,12 @@ public class BatchDetailView extends CustomComponent {
 		txtActualOG.setPropertyDataSource(item.getItemProperty("actualOG"));
 		txtActualFG.setPropertyDataSource(item.getItemProperty("actualFG"));
 		txtTargetOG.setPropertyDataSource(item.getItemProperty("targetOG"));
+		// txtFinalABV.setPropertyDataSource(item.getItemProperty("actualABV")); // needs to be handled manually
 		txtIngredients.setPropertyDataSource(item.getItemProperty("ingredients"));
+		
+		txtFinalABV.setReadOnly(false);
+		txtFinalABV.setValue(df.format(batch.getActualABV()));
+		txtFinalABV.setReadOnly(true);
 		
 		// YEAST
 		List<Yeast> yeastList = AppData.getBrewJournalService().findAllYeast();
@@ -172,6 +175,8 @@ public class BatchDetailView extends CustomComponent {
 		txtaNote.setImmediate(false);
 		txtaNote.setSizeFull();
 		vLayoutNotes.addComponent(txtaNote);
+		
+		// updateActualValues(); // the value should already be correct on the entity
 		
 		initializing = false;
 	}
@@ -248,14 +253,45 @@ public class BatchDetailView extends CustomComponent {
 		});
 		
 		// OG specification
-		txtActualOG.setImmediate(true); // so we can process events immediately
-		txtActualOG.addListener(new Property.ValueChangeListener() {
+		txtTargetOG.setImmediate(true); // so we can process events immediately
+		txtTargetOG.addListener(new Property.ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
 				updateTheoreticalValues();
 			}
 		});
+
+		txtActualOG.setImmediate(true); // so we can process events immediately
+		txtActualOG.addListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				updateActualValues();
+			}
+		});
 		
+		txtActualFG.setImmediate(true); // so we can process events immediately
+		txtActualFG.addListener(new Property.ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				updateActualValues();
+			}
+		});
+		
+	}
+	
+	/**
+	 * Updates actual ABV based on actuals
+	 */
+	private void updateActualValues() {
+		Double og = new Double( toIntegerSafe(txtActualOG.getValue()) );
+		Double fg = new Double( toIntegerSafe(txtActualFG.getValue()) );
+		Double abv = AppData.getBrewJournalService().calculateABV(og, fg);
+		
+		getBatchModel().setActualABV(abv);
+		
+		txtFinalABV.setReadOnly(false);
+		txtFinalABV.setValue(df.format(abv));
+		txtFinalABV.setReadOnly(true);
 	}
 	
 	/**
@@ -263,34 +299,34 @@ public class BatchDetailView extends CustomComponent {
 	 * Try to update whenever OG and Yeast get updated
 	 */
 	private void updateTheoreticalValues() {
-		Double og = new Double( toIntegerSafe(txtActualOG.getValue()) ); //  might need Double
+		Double og = new Double( toIntegerSafe(txtTargetOG.getValue()) ); //  might need Double
 		
 		Double abv = 0d;
-		DecimalFormat df = new DecimalFormat("#.##");
+		//DecimalFormat df = new DecimalFormat("#.##");
 		
 		if (og > 0 && getSelectedYeast() != null) {
 			Double min = new Double(getSelectedYeast().getMinAttenuation());
 			Double max = new Double(getSelectedYeast().getMaxAttenuation());
 			Double lowFG = og - og * (max/100.0d);
 			Double highFG = og - og * (min/100);
-			getLogger().info("lowFG: "+ lowFG);
-			getLogger().info("highFG: "+ highFG);
+			///getLogger().info("lowFG: "+ lowFG);
+			//getLogger().info("highFG: "+ highFG);
 			
 			abv = AppData.getBrewJournalService().calculateABV(og, highFG);
-			getLogger().info("low ABV: "+ abv);
+			//getLogger().info("low ABV: "+ abv);
 			
 			String displayABV = df.format(abv);
 			
 			abv = AppData.getBrewJournalService().calculateABV(og, lowFG);
-			getLogger().info("high ABV: "+ abv);
+			//getLogger().info("high ABV: "+ abv);
 			
-			displayABV += " to " + df.format(abv);
+			displayABV += " up to " + df.format(abv);
 			
 			txtTargetABV.setReadOnly(false);
 			txtTargetABV.setValue(displayABV);
 			txtTargetABV.setReadOnly(true);
 			
-			String displayFG = df.format(lowFG) + " to " + df.format(highFG);
+			String displayFG = df.format(highFG) + " down to " + df.format(lowFG);
 			txtTheoreticalFG.setReadOnly(false);
 			txtTheoreticalFG.setValue(displayFG );
 			txtTheoreticalFG.setReadOnly(true);
