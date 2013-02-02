@@ -181,7 +181,7 @@ public class BatchListView extends CustomComponent {
 		tblBatchList.setVisibleColumns(BatchListContainer.NATURAL_COL_ORDER);
 		tblBatchList.setColumnHeaders(BatchListContainer.COL_HEADERS_ENGLISH);
 		
-		tblBatchList.setColumnWidth("batchNumber", 20);// TODO: needs to be a better way to specify property ID
+		tblBatchList.setColumnWidth("batchNumber", 30);// TODO: needs to be a better way to specify property ID
 		
 	}
 

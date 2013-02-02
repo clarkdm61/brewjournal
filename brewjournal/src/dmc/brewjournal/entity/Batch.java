@@ -9,6 +9,8 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Text;
 
+import dmc.brewjournal.vaadin.AppMain;
+
 
 @PersistenceCapable(detachable="true")
 public class Batch implements java.io.Serializable, Comparable<Batch> {
@@ -186,6 +188,10 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 
 	public void setActualABV(Double actualABV) {
 		this.actualABV = actualABV;
+	}
+	
+	public String getActualABVString() {
+		return AppMain.DECIMAL_FORMAT.format(getActualABV());
 	}
 
 //	public List<Note> getNotes() {
