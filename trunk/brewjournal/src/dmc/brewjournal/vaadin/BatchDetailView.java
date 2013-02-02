@@ -94,7 +94,6 @@ public class BatchDetailView extends CustomComponent {
 	private List<Note> notesModel = new ArrayList<Note>(); // the text model
 	private Yeast selectedYeast = null;
 	private boolean initializing = false;
-	private static final DecimalFormat df = new DecimalFormat("#.##");
 
 	
 	/**
@@ -143,7 +142,7 @@ public class BatchDetailView extends CustomComponent {
 		txtIngredients.setPropertyDataSource(item.getItemProperty("ingredients"));
 		
 		txtFinalABV.setReadOnly(false);
-		txtFinalABV.setValue(df.format(batch.getActualABV()));
+		txtFinalABV.setValue(batch.getActualABVString());
 		txtFinalABV.setReadOnly(true);
 		
 		// YEAST
@@ -290,7 +289,7 @@ public class BatchDetailView extends CustomComponent {
 		getBatchModel().setActualABV(abv);
 		
 		txtFinalABV.setReadOnly(false);
-		txtFinalABV.setValue(df.format(abv));
+		txtFinalABV.setValue(getBatchModel().getActualABVString());
 		txtFinalABV.setReadOnly(true);
 	}
 	
@@ -315,18 +314,18 @@ public class BatchDetailView extends CustomComponent {
 			abv = AppData.getBrewJournalService().calculateABV(og, highFG);
 			//getLogger().info("low ABV: "+ abv);
 			
-			String displayABV = df.format(abv);
+			String displayABV = AppMain.DECIMAL_FORMAT.format(abv);
 			
 			abv = AppData.getBrewJournalService().calculateABV(og, lowFG);
 			//getLogger().info("high ABV: "+ abv);
 			
-			displayABV += " up to " + df.format(abv);
+			displayABV += " up to " + AppMain.DECIMAL_FORMAT.format(abv);
 			
 			txtTargetABV.setReadOnly(false);
 			txtTargetABV.setValue(displayABV);
 			txtTargetABV.setReadOnly(true);
 			
-			String displayFG = df.format(highFG) + " down to " + df.format(lowFG);
+			String displayFG = AppMain.DECIMAL_FORMAT.format(highFG) + " down to " + AppMain.DECIMAL_FORMAT.format(lowFG);
 			txtTheoreticalFG.setReadOnly(false);
 			txtTheoreticalFG.setValue(displayFG );
 			txtTheoreticalFG.setReadOnly(true);

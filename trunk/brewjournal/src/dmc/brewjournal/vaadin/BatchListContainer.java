@@ -14,14 +14,14 @@ public class BatchListContainer extends BeanItemContainer<Batch> {
 	 * Natural property order for Batch bean. Used in tables and forms.
 	 */
 	public static final Object[] NATURAL_COL_ORDER = new Object[] {
-			"batchNumber", "batchName" };
+			"batchNumber", "batchName", "brewDate", "actualABVString" };
 
 	/**
 	 * "Human readable" captions for properties in same order as in
 	 * NATURAL_COL_ORDER.
 	 */
 	public static final String[] COL_HEADERS_ENGLISH = new String[] {
-			"Batch No.", "Name" };
+			"Batch No.", "Name", "Date", "ABV" };
 
 
 	public BatchListContainer(Class<? super Batch> type)

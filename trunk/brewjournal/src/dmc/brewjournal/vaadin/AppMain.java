@@ -1,6 +1,7 @@
 package dmc.brewjournal.vaadin;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Iterator;
 
 import com.vaadin.Application;
@@ -15,6 +16,8 @@ public class AppMain extends Application implements Serializable {
 	private BatchDetailView batchDetailView = null;
 	private BatchListView batchListView = null;
 	private YeastView yeastView = null;
+	
+	public static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
 	@Override
 	public void init() {
