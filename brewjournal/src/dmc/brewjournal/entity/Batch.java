@@ -40,6 +40,8 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	private Integer actualOG = 0;
 	@Persistent
 	private Integer actualFG = 0;
+	@Persistent
+	private Double actualABV = 0.0;
 	// userId is never used by the client
 	@Persistent
 	private String userId;
@@ -176,6 +178,14 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 
 	public void setYeastId(Long yeastId) {
 		this.yeastId = yeastId;
+	}
+
+	public Double getActualABV() {
+		return actualABV;
+	}
+
+	public void setActualABV(Double actualABV) {
+		this.actualABV = actualABV;
 	}
 
 //	public List<Note> getNotes() {
