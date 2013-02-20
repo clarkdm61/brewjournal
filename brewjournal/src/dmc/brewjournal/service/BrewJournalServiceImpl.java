@@ -13,6 +13,7 @@ import dmc.brewjournal.entity.Yeast;
 import dmc.brewjournal.persistence.BatchDAO;
 import dmc.brewjournal.persistence.NotesDAO;
 import dmc.brewjournal.persistence.YeastDAO;
+import dmc.brewjournal.vaadin.AppData;
 
 /**
  * This is a Stateful service class. So consider the consequences.
@@ -29,6 +30,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	private transient BatchDAO batchDAO = null;
 	private transient NotesDAO notesDAO = null;
 	private transient YeastDAO yeastDAO = null;
+	private List<Yeast> yeastListCache = null;
 	
 	public BrewJournalServiceImpl() {
 		super();
@@ -119,6 +121,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 		UserService userService = UserServiceFactory.getUserService();
 		instance.setUserId(userService.getCurrentUser().getUserId());
 		getYeastDAO().createUpdate(instance);
+		refreshYeastListCache();
 	}
 	
 	/* (non-Javadoc)
@@ -131,6 +134,39 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 		Double result = (og-fg) * .13125;
 		
 		return result;
+	}
+	
+	/**
+	 * See refreshYeastListCache()
+	 * @return
+	 */
+	@Override
+	public List<Yeast> getYeastListCache() {
+		if (yeastListCache == null) {
+			refreshYeastListCache();
+		}
+		return yeastListCache;
+	}
+	
+	/**
+	 * Search references to find out when cache is refreshed.
+	 */
+	public void refreshYeastListCache() {
+		yeastListCache = findAllYeast();
+	}
+	
+	@Override
+	public Yeast getYeastForBatch(Batch batch) {
+		List<Yeast> yeastList = getYeastListCache();
+		if (batch.getYeastId() != 0) {
+			for (Yeast yeast : yeastList) {
+				if (yeast.getId().equals(batch.getYeastId())) {
+					return yeast;
+				}
+			}
+		}
+		throw new RuntimeException("Yeast not found for batch.id = " + batch.getId());
+		//return null;
 	}
 
 }

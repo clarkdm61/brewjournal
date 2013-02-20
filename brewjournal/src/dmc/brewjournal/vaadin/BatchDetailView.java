@@ -1,6 +1,5 @@
 package dmc.brewjournal.vaadin;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,6 +84,10 @@ public class BatchDetailView extends CustomComponent {
 
 	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
 
+	
+
+	/*- VaadinEditorProperties={"grid":"RegularGrid,20","showGrid":true,"snapToGrid":true,"snapToObject":true,"movingGuides":false,"snappingDistance":10} */
+
 	/**
 	 * 
 	 */
@@ -146,14 +149,10 @@ public class BatchDetailView extends CustomComponent {
 		txtFinalABV.setReadOnly(true);
 		
 		// YEAST
-		List<Yeast> yeastList = AppData.getBrewJournalService().findAllYeast();
-		if (batchModel.getYeastId() != 0) {
-			for (Yeast yeast : yeastList) {
-				if (yeast.getId().equals(batchModel.getYeastId())) {
-					setSelectedYeast(yeast);
-				}
-			}
-		}
+		Yeast yeast = AppData.getBrewJournalService().getYeastForBatch(batchModel);
+		setSelectedYeast(yeast);
+		
+		List<Yeast> yeastList = AppData.getBrewJournalService().getYeastListCache();		
 		BeanItemContainer<Yeast> yeastDataSource = new YeastListContainer(Yeast.class, yeastList);		
 		cboYeast.setContainerDataSource(yeastDataSource);
 		cboYeast.setValue(getSelectedYeast());

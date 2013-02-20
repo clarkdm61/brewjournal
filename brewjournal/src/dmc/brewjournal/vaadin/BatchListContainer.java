@@ -2,6 +2,7 @@ package dmc.brewjournal.vaadin;
 
 import java.util.Collection;
 
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 
 import dmc.brewjournal.entity.Batch;
@@ -35,6 +36,14 @@ public class BatchListContainer extends BeanItemContainer<Batch> {
 			throws IllegalArgumentException {
 		super(type, collection);
 		// 
+	}
+	
+	public BeanItem<Batch> getItem(Object itemId) {
+//		if (itemId.toString().equals("foo")) {
+//			return "hello"
+//		} else {
+			return super.getItem(itemId);
+		//}
 	}
 
 }
