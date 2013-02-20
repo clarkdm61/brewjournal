@@ -58,4 +58,8 @@ public interface BrewJournalService {
 	 */
 	public abstract Double calculateABV(Double og, Double fg);
 
+	public abstract Yeast getYeastForBatch(Batch batch);
+
+	public abstract List<Yeast> getYeastListCache();
+
 }
