@@ -67,6 +67,7 @@ public class AppMain extends Application implements Serializable {
 	 */
 	public void showYeastView() {
 		removeCurrentComponent();
+		yeastView.refreshYeastListTable();
 		getMainWindow().addComponent(yeastView);
 	}
 	

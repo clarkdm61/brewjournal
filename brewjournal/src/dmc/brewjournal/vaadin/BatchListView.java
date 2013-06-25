@@ -170,7 +170,7 @@ public class BatchListView extends CustomComponent {
 	public void refreshBatchListTable() {
 		List<Batch> batchList = AppData.getBrewJournalService().findAllBatches();
 		
-		Collections.sort(batchList);
+		//Collections.sort(batchList);
 		
 		if (batchList.size() > 0) {
 			nextBatchNumber = batchList.get(batchList.size()-1).getBatchNumber() + 1;
@@ -182,6 +182,8 @@ public class BatchListView extends CustomComponent {
 		tblBatchList.setColumnHeaders(BatchListContainer.COL_HEADERS_ENGLISH);
 		
 		tblBatchList.setColumnWidth("batchNumber", 30);// TODO: needs to be a better way to specify property ID
+		
+		tblBatchList.sort(new Object[]{"batchNumber"}, new boolean[]{false}); // causes concurrent mod exception - bad sort?
 		
 	}
 
