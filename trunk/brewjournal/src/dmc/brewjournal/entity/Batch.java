@@ -193,6 +193,16 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	public String getActualABVString() {
 		return AppMain.DECIMAL_FORMAT.format(getActualABV());
 	}
+	
+	public Integer getAgeFromBrewDate() {
+		if (getBrewDate() == null) return 0;
+		
+		long brewDate = getBrewDate().getTime();
+		long now = System.currentTimeMillis();
+		long age = now-brewDate;
+		int days = (int) (age/86400000);
+		return days;
+	}
 
 //	public List<Note> getNotes() {
 //		return notes;

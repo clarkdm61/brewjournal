@@ -164,9 +164,9 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 					return yeast;
 				}
 			}
+			throw new RuntimeException("Yeast not found for batch.id = " + batch.getId());
 		}
-		throw new RuntimeException("Yeast not found for batch.id = " + batch.getId());
-		//return null;
+		return null;
 	}
 
 }

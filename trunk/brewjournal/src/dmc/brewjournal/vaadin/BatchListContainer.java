@@ -38,12 +38,12 @@ public class BatchListContainer extends BeanItemContainer<Batch> {
 		// 
 	}
 	
-	public BeanItem<Batch> getItem(Object itemId) {
+//	public BeanItem<Batch> getItem(Object itemId) {
 //		if (itemId.toString().equals("foo")) {
-//			return "hello"
+//			return "hello";
 //		} else {
-			return super.getItem(itemId);
-		//}
-	}
+//			return super.getItem(itemId);
+//		}
+//	}
 
 }
