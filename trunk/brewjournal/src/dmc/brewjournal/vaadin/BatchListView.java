@@ -1,6 +1,7 @@
 package dmc.brewjournal.vaadin;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -149,8 +150,11 @@ public class BatchListView extends CustomComponent {
 		tblBatchList.addListener(new Property.ValueChangeListener() {			
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-				Batch batch = (Batch)((Table) event.getProperty()).getValue();
-				setSelectedBatch(batch);
+				BatchListContainerModel batchModel = (BatchListContainerModel)((Table) event.getProperty()).getValue();
+				if (batchModel != null) {
+					Batch batch = batchModel.getBatch();
+					setSelectedBatch(batch);
+				}
 			}
 		});
 	}
@@ -176,7 +180,12 @@ public class BatchListView extends CustomComponent {
 			nextBatchNumber = batchList.get(batchList.size()-1).getBatchNumber() + 1;
 		}
 		
-		BatchListContainer container = new BatchListContainer(Batch.class, batchList);
+		// wrap each batch with a BatchListContainerModel
+		ArrayList<BatchListContainerModel> wrappedCollection = new  ArrayList<BatchListContainerModel>();
+		for (Batch batch : batchList) {
+			wrappedCollection.add(new BatchListContainerModel(batch));
+		}
+		BatchListContainer container = new BatchListContainer(BatchListContainerModel.class, wrappedCollection);
 		tblBatchList.setContainerDataSource(container);
 		tblBatchList.setVisibleColumns(BatchListContainer.NATURAL_COL_ORDER);
 		tblBatchList.setColumnHeaders(BatchListContainer.COL_HEADERS_ENGLISH);

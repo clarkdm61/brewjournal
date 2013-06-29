@@ -30,7 +30,7 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	private transient BatchDAO batchDAO = null;
 	private transient NotesDAO notesDAO = null;
 	private transient YeastDAO yeastDAO = null;
-	private List<Yeast> yeastListCache = null;
+	//private List<Yeast> yeastListCache = null; // can't use with Vaadin since List is not serializable
 	
 	public BrewJournalServiceImpl() {
 		super();
@@ -142,17 +142,17 @@ public class BrewJournalServiceImpl implements BrewJournalService, Serializable 
 	 */
 	@Override
 	public List<Yeast> getYeastListCache() {
-		if (yeastListCache == null) {
-			refreshYeastListCache();
-		}
-		return yeastListCache;
+//		if (yeastListCache == null) {
+//			refreshYeastListCache();
+//		}
+		return findAllYeast();
 	}
 	
 	/**
 	 * Search references to find out when cache is refreshed.
 	 */
 	public void refreshYeastListCache() {
-		yeastListCache = findAllYeast();
+		//yeastListCache = findAllYeast();
 	}
 	
 	@Override

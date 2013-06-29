@@ -181,6 +181,14 @@ public class BatchDetailView extends CustomComponent {
 		txtAgeFromBrewDate.setReadOnly(true);
 		// updateActualValues(); // the value should already be correct on the entity
 		
+		// [lbl]ageFermented (should show up under RackingDate)
+		// txtRackDate(null?) - txtBrewDate
+		
+		
+		// [lbl]ageFromFinal (shows up under ageInContainer)
+		// today - txtFinalDate
+		
+		
 		initializing = false;
 	}
 	
