@@ -204,6 +204,30 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 		return days;
 	}
 
+	public Integer getFermentationTimeTotal() {
+		if (getFinalDate() == null) return 0;
+		if (getBrewDate() == null) return 0;
+		
+		long brewDate = getBrewDate().getTime();
+		long finalDate = getFinalDate().getTime();
+
+		long age = finalDate - brewDate;
+		int days = (int) (age/86400000);
+		return days;
+	}
+
+	public Integer getFermentationTimePrimary() {
+		if (getRackingDate() == null) return 0;
+		if (getBrewDate() == null) return 0;
+		
+		long rackDate = getRackingDate().getTime();
+		long finalDate = getFinalDate().getTime();
+
+		long age = finalDate - rackDate;
+		int days = (int) (age/86400000);
+		return days;
+	}
+
 //	public List<Note> getNotes() {
 //		return notes;
 //	}
