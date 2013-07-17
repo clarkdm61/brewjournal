@@ -325,8 +325,13 @@ public class BatchDetailView extends CustomComponent {
 		String displayValue = getBatchModel().getActualABVString();
 		
 		//apparent attenuation = ( ( OG in points - FG in points ) / OG in points ) x 100
-		Double attenuation = ((og - fg) / og ) * 100;
-		displayValue += "% (" + attenuation + "%)";
+		Double attenuation = null;
+		try {
+			attenuation = ((og - fg) / og ) * 100;
+		} catch (Exception e) {
+			attenuation = 0.0;
+		}
+		displayValue += "% (" + AppMain.DECIMAL_FORMAT.format(attenuation) + "%)";
 		
 		txtFinalABV.setReadOnly(false);
 		txtFinalABV.setValue(displayValue);
