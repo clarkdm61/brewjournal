@@ -219,6 +219,7 @@ public class Batch implements java.io.Serializable, Comparable<Batch> {
 	public Integer getFermentationTimePrimary() {
 		if (getRackingDate() == null) return 0;
 		if (getBrewDate() == null) return 0;
+		if (getFinalDate() == null) return 0;
 		
 		long rackDate = getRackingDate().getTime();
 		long finalDate = getFinalDate().getTime();
